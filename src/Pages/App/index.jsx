@@ -1,3 +1,7 @@
+import { useRoutes, BrowserRouter } from 'react-router-dom'
+import { useState } from 'react'
+
+
 import React from 'react'
 import Home from '../Home'
 import MyAccount from '../MyAccount'
@@ -5,18 +9,26 @@ import MyOrder from '../Myorder'
 import Myorders from '../Myorders'
 import NotFound from '../NotFound'
 import SingIn from '../SignIn'
-
-import { useState } from 'react'
 import './App.css'
 
-function App() {
+const AppRoutes = () => {
+  let routes = useRoutes([
+    {  path: '/', element: <Home/> },
+    {  path: '/my-account', element: <MyAccount/> },
+    {  path: '/my-order', element: <MyOrder/> },
+    {  path: '/my-orders', element: <Myorders/> },
+    {  path: '/*', element: <NotFound/> },
+    {  path: '/sing-in', element: <SingIn/> },
+  ])
+  return routes;
+}
 
+const App = () => {
   return (
     <>
-      <Home/>
-      <div className='bg-gray-800' >
-       Hola
-      </div>
+      <BrowserRouter>
+        <AppRoutes/>
+      </BrowserRouter>
     </>
   )
 }
