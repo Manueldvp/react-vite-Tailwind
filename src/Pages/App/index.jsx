@@ -1,8 +1,6 @@
 import { useRoutes, BrowserRouter } from 'react-router-dom'
-import { useState } from 'react'
-import { cartContextProvider } from '../../Context'
-
 import React from 'react'
+import ShoppingCartProvider from '../../Context'
 import Home from '../Home'
 import MyAccount from '../MyAccount'
 import MyOrder from '../Myorder'
@@ -11,6 +9,7 @@ import NotFound from '../NotFound'
 import SingIn from '../SignIn'
 import Navbar from '../../Components/Navbar'
 import './App.css'
+
 
 const AppRoutes = () => {
   let routes = useRoutes([
@@ -25,15 +24,14 @@ const AppRoutes = () => {
 }
 
 const App = () => {
+
   return (
-    <>
-      <cartContextProvider>
-        <BrowserRouter>
-          <AppRoutes/>
-          <Navbar/>
-        </BrowserRouter>
-      </cartContextProvider>  
-    </>
+    <ShoppingCartProvider>
+      <BrowserRouter>
+        <AppRoutes/>
+        <Navbar/>
+      </BrowserRouter>
+    </ShoppingCartProvider>
   )
 }
 
