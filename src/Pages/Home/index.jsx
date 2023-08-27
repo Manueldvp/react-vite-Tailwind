@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import Layout from '../../Components/Layout'
 import Card from '../../Components/Card'
+import ProductDetail from '../../Components/ProductDetail'
 import axios from 'axios'
 import apiUrl  from '../../Api/index'
 
@@ -24,7 +25,8 @@ function Home() {
           return <Card key={item.id} data={item}/>
         })
       }
-      </div>  
+      </div> 
+      <ProductDetail/> 
     </Layout>
   )
 }
