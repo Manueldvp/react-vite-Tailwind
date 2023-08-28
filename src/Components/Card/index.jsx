@@ -8,6 +8,15 @@ const Card = ({data}) => {
   const showProduct = (productDetail) => {
     context.openProductDetail()
     context.setProductDetailShow(productDetail)
+    context.closeCheckoutSide()
+  }
+
+  const addProductsToCart = (e, productData) => {
+    e.stopPropagation();
+    context.setCount(context.count + 1);
+    context.openCheckoutSide()
+    context.setCartProducts([...context.cartProducts, productData])
+    context.closeProductDetail()
   }
 
   return (
@@ -18,9 +27,7 @@ const Card = ({data}) => {
             <span className='absolute m-2 px-3 py-0.5 bottom-0 left-0 bg-slate-500/60 rounded-md text-black text-sm'>
                 {data.category}
             </span>
-            <div className='absolute m-2 p-1 top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full' onClick={(e) => {
-              e.stopPropagation();
-              context.setCount(context.count + 1)}}>
+            <div className='absolute m-2 p-1 top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full' onClick={(e) => addProductsToCart(e, data)}>
               <PlusSmallIcon/>
             </div>
             <p className='flex justify-between gap-3'>
