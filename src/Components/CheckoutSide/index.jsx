@@ -1,9 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { ShoppingCartContext } from '../../Context'
 import { XCircleIcon } from '@heroicons/react/24/outline'
 import OrderCard from '../OrderCard'
-import totalPrice from '../../utils'
+import totalPrice, { qty } from '../../utils'
 import './CheckoutSide.css'
 
 
@@ -33,6 +34,25 @@ const CheckoutSideMenu = () => {
     } 
   }
 
+  const handleCheckout = () => {
+
+    const getIdProductCart = context.cartProducts.map((cart) => {
+      return cart.id
+    })
+
+    const orderToAdd = {
+      date: '01.02.23',
+      products: context.cartProducts,
+      totalProducts: qty(context.cartProducts),
+      totalPrice: totalPrice(context.cartProducts),
+      id: getIdProductCart,
+    }
+    context.setOrder([...context.order,  orderToAdd])
+    context.setCartProducts([])
+    console.log(orderToAdd.id);
+  }
+ 
+
   return (
     <aside 
     className={`${context.isCheckoutSideOpen ? 'flex' : 'hidden'} checkout-side flex-col fixed top-20  bg-white right-5 border border-black rounded-lg `}>
@@ -42,7 +62,7 @@ const CheckoutSideMenu = () => {
             </h2>
             <XCircleIcon className='flex w-8 h-8 cursor-pointer' onClick={() => context.closeCheckoutSide()}/>
         </div>
-        <div className='flex flex-col overflow-y-scroll'>
+        <div className='flex flex-col flex-1 overflow-y-scroll'>
           {
             context.cartProducts.map(product => {
               return (
@@ -60,11 +80,14 @@ const CheckoutSideMenu = () => {
             )})
           }
         </div>
-        <div>
+        <div className='px-2'>
           <p>
-            <span>Checkout</span>
+            <span>Total</span>
             <span>${totalPrice(context.cartProducts)}</span>
           </p>
+          <Link to='my-orders/last'>
+              <button onClick={() => handleCheckout()} className='w-full h-10 mb-5 bg-slate-400 rounded-lg'>Checkout</button>
+          </Link>
         </div>
     </aside>
   )

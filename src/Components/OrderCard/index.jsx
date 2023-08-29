@@ -6,7 +6,15 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 const OrderCard = props => {
 
     const { id, title, image, price, quantity, handleDelete, increaseQuantity, decreaseQuantity } = props
- 
+    let renderXmark
+
+    if (handleDelete) {
+      renderXmark =<XMarkIcon 
+      onClick={() => handleDelete(id)}
+      className='h-3 w-3 text-black cursor-pointer'
+        >          
+      </XMarkIcon>
+    }
 
   return (
   
@@ -31,12 +39,11 @@ const OrderCard = props => {
             onClick={() => increaseQuantity(id)}
           > + </span>
         </div>
-        <p className='text-sm font-medium'>${price}</p>
-        <XMarkIcon 
-          onClick={() => handleDelete(id)}
-          className='h-3 w-3 text-black cursor-pointer'
-        >          
-        </XMarkIcon>
+        <div>
+          <p className='text-sm font-medium'>${price}</p>
+         {renderXmark}
+        </div>
+        
       </div>
     </div>
   

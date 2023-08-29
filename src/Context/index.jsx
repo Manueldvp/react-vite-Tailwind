@@ -25,7 +25,8 @@ const ShoppingCartProvider = ({ children }) => {
     const closeCheckoutSide = () => setIsCheckoutSideOpen(false)
 
 
-    // Prices Total
+    // Shopping Cart Order
+    const [order, setOrder] = useState([])
     
 
     return (
@@ -43,7 +44,9 @@ const ShoppingCartProvider = ({ children }) => {
             isCheckoutSideOpen,
             setIsCheckoutSideOpen,
             closeCheckoutSide,
-            openCheckoutSide
+            openCheckoutSide,
+            order,
+            setOrder
             }}>
             {children}
         </ShoppingCartContext.Provider>
