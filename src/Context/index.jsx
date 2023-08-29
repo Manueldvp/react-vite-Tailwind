@@ -25,6 +25,9 @@ const ShoppingCartProvider = ({ children }) => {
     const closeCheckoutSide = () => setIsCheckoutSideOpen(false)
 
 
+    // Prices Total
+    
+
     return (
         <ShoppingCartContext.Provider value={{
             count, 

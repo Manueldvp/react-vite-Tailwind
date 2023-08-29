@@ -85,7 +85,7 @@ const Navbar = () => {
                 </NavLink>
             </li>
             <li className='flex gap-1'>
-                <ShoppingCartIcon  className="h-5 w-5 text-black/60"/> {context.count}
+                <ShoppingCartIcon  className="h-5 w-5 text-black/60"/> {context.cartProducts.length}
             </li>
         </ul>
     </nav>

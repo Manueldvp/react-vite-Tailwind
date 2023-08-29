@@ -3,6 +3,7 @@ import { useContext } from 'react'
 import { ShoppingCartContext } from '../../Context'
 import { XCircleIcon } from '@heroicons/react/24/outline'
 import OrderCard from '../OrderCard'
+import totalPrice from '../../utils'
 import './CheckoutSide.css'
 
 
@@ -10,6 +11,27 @@ const CheckoutSideMenu = () => {
 
   const context = useContext(ShoppingCartContext)
 
+  
+  const handleDelete = (id) => {
+    const filteredProducts = context.cartProducts.filter(product => product.id != id)
+    context.setCartProducts(filteredProducts);
+  }
+
+  const increaseQuantity = (id, quantity) => {
+    const productCart = context.cartProducts.find(cartItem => cartItem.id === id);
+    productCart.quantity += 1;
+    context.setCartProducts([...context.cartProducts]); // Causar un renderizado actualizando el estado
+  }
+
+  const decreaseQuantity = (id, quantity) => {
+    const deletedProduct = context.cartProducts.filter(product => product.id != id);
+    const productCart = context.cartProducts.find(cartItem => cartItem.id === id);
+    productCart.quantity -= 1;
+    context.setCartProducts([...context.cartProducts]); 
+    if (productCart.quantity === 0){
+      context.setCartProducts(deletedProduct);
+    } 
+  }
 
   return (
     <aside 
@@ -26,12 +48,23 @@ const CheckoutSideMenu = () => {
               return (
                 <OrderCard 
                 key={product.id}
+                id={product.id}
                 title={product.title}
                 price={product.price}
                 image={product.image}
+                quantity={product.quantity}
+                handleDelete={handleDelete}
+                increaseQuantity={increaseQuantity}
+                decreaseQuantity={decreaseQuantity}
                 />
             )})
           }
+        </div>
+        <div>
+          <p>
+            <span>Checkout</span>
+            <span>${totalPrice(context.cartProducts)}</span>
+          </p>
         </div>
     </aside>
   )
