@@ -3,16 +3,29 @@ import Layout from '../../Components/Layout'
 import { useContext } from 'react'
 import { ShoppingCartContext } from '../../Context'
 import OrderCard from '../../Components/OrderCard'
+import { ArrowDownOnSquareStackIcon } from '@heroicons/react/24/outline'
+import { Link } from 'react-router-dom'
+
 
 function Myorder() {
   const context = useContext(ShoppingCartContext)
-  console.log(context.order?.slice(-1)[0].products);
+
+  const currentPath = window.location.pathname
+  let index = currentPath.substring(currentPath.lastIndexOf('/') + 1 )
+  if (index === 'last') index = context.order?.length -1
+
   return (
     <Layout>
-      My Order
+      <div className='flex w-100  gap-5 mb-5'>
+        <Link to='/my-orders'>
+         <ArrowDownOnSquareStackIcon className='w-6 h-6'/>
+        </Link>
+        <h1>My Order</h1>
+      </div>
+      
       <div className='flex flex-col flex-1'>
           {
-            context.order?.slice(-1)[0].products.map(product => {
+            context.order?.[index]?.products.map(product => {
               return (
                 <OrderCard 
                 key={product.id}

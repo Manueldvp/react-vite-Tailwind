@@ -36,20 +36,15 @@ const CheckoutSideMenu = () => {
 
   const handleCheckout = () => {
 
-    const getIdProductCart = context.cartProducts.map((cart) => {
-      return cart.id
-    })
-
     const orderToAdd = {
       date: '01.02.23',
       products: context.cartProducts,
       totalProducts: qty(context.cartProducts),
       totalPrice: totalPrice(context.cartProducts),
-      id: getIdProductCart,
     }
     context.setOrder([...context.order,  orderToAdd])
     context.setCartProducts([])
-    console.log(orderToAdd.id);
+  
   }
  
 
