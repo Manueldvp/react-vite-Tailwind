@@ -16,7 +16,9 @@ function Myorders() {
       </div>
       
       {
+        
         context.order.map((card, index) => (
+          
           <Link key={index} to={`/my-orders/${index}`}>
             <OrderCards
           
@@ -24,11 +26,15 @@ function Myorders() {
               totalProducts={card.totalProducts}/>
           </Link>
           )
+          
         ) 
+        
       }
-     
+        
     </Layout>
+    
   )
+  
 }
 
 export default Myorders

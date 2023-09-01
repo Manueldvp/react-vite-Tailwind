@@ -1,30 +1,48 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
 import Layout from '../../Components/Layout'
 import Card from '../../Components/Card'
 import ProductDetail from '../../Components/ProductDetail'
-import axios from 'axios'
-import apiUrl  from '../../Api/index'
+import { useContext } from 'react'
+import { ShoppingCartContext } from '../../Context'
+
 
 
 function Home() {
+  const context = useContext(ShoppingCartContext)
 
-  const [items, setItems] = useState(null)
-
-  useEffect(() => {
-    fetch(`${apiUrl}`)
-    .then(res => res.json())
-    .then(data => setItems(data));
-  }, [])
+  const renderView = () => {
+    if (context.searchByTittle?.length > 0) {
+      if (context.filteredItems?.length > 0) {
+         return (
+          context.filteredItems?.map(item => {
+            return <Card key={item.id} data={item}/>
+          })
+        ) 
+      } else {
+        return (
+          <div>No matches found</div>
+        )
+      }
+         
+    } else {
+      return (
+          context.items?.map(item => {
+            return <Card key={item.id} data={item}/>
+          })
+       )
+    }
+  }
 
   return (
     <Layout>
+      <div className='flex w-50 items-center justify-center'>
+        <h1>Products</h1>
+      </div>
+      <div className='items-center'>
+        <input type="text" placeholder='Search a...' className='rounded-lg border items-center mb-5 border-black focus:outline-slate-500 h-15 p-2 w-100' onChange={(e) => context.setSearchByTittle(e.target.value)} />
+      </div>
       <div className='grid gap-3 grid-cols-4 w-full max-w-screen-lg'>
-         {
-        items ?.map(item => {
-          return <Card key={item.id} data={item}/>
-        })
-      }
+        {renderView()}
       </div> 
       <ProductDetail/> 
     </Layout>
