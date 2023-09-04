@@ -12,12 +12,12 @@ const ProductDetail = () => {
 
   return (
     <aside 
-    className={`${context.isProductDetailOpen ? 'flex' : 'hidden'} product-detail flex-col fixed   bg-white right-0 border border-black rounded-lg`}>
+    className={`${context.isProductDetailOpen ? 'flex' : 'hidden'} product-detail flex-col fixed   bg-white right-0 shadow-3xl rounded-lg`}>
         <div className='flex p-5 justify-between items-center '>
             <h2 className='font-medium text-xl'>
                 Detail
             </h2>
-            <XCircleIcon className='flex w-8 h-8 cursor-pointer' onClick={() => context.closeProductDetail()}/>
+            <XCircleIcon className='flex w-8 h-8 cursor-pointer hover:text-black/50' onClick={() => context.closeProductDetail()}/>
         </div>
         <figure>
           <img className='w-full h-full rounded-lg p-5'  src={context.productDetailShow.image} alt="img" />

@@ -15,11 +15,10 @@ const ShoppingCartProvider = ({ children }) => {
 
     //Get categories
     const [searchByCategory, setSearchByCategory] = useState(null)
-
-
+    
     // Get products by title
     const [searchByTittle, setSearchByTittle] = useState(null)
-    console.log(searchByTittle);
+   
 
     useEffect(() => {
         fetch(`${apiUrl}`)
@@ -32,7 +31,7 @@ const ShoppingCartProvider = ({ children }) => {
       }
 
       const filteredItemsByCategory = (items, searchByCategory) => {
-        return items?.filter(item => item.category.name.toLowerCase().includes(searchByCategory.toLowerCase()))
+        return items?.filter(item => item.category.toLowerCase().includes(searchByCategory))
       }
     
 
@@ -44,7 +43,7 @@ const ShoppingCartProvider = ({ children }) => {
           if (searchType === 'BY_CATEGORY') {
             return filteredItemsByCategory(items, searchByCategory)
           }
-          if (searchType === 'BY_TITLE_AND_BY_CATEGORY') {
+          if (searchType === 'BY_TITLE_AND_CATEGORY') {
             return filteredItemsByCategory(items, searchByCategory).filter(item => item.title.toLowerCase().includes(searchByTittle.toLowerCase()))
           }
           if (!searchType) {
@@ -53,15 +52,13 @@ const ShoppingCartProvider = ({ children }) => {
       }
 
       useEffect(() => {
-        if(searchByTittle && !searchByCategory) 
-            setFilteredItems(filterBy('BY_TITLE',items, searchByTittle, searchByCategory))   
-        if(!searchByTittle && searchByCategory) 
-          setFilteredItems(filteredItemsByCategory('BY_CATEGORY',items, searchByCategory, searchByTittle))
-        if(!searchByTittle && !searchByCategory) 
-          setFilteredItems(filteredItemsByCategory(null,items, searchByCategory, searchByTittle))
-        if(searchByTittle && searchByCategory) 
-          setFilteredItems(filteredItemsByCategory('BY_TITLE_AND_BY_CATEGORY',items, searchByCategory, searchByTittle))
+        if (searchByTittle && searchByCategory) setFilteredItems(filterBy('BY_TITLE_AND_CATEGORY', items, searchByTittle, searchByCategory))
+        if (searchByTittle && !searchByCategory) setFilteredItems(filterBy('BY_TITLE', items, searchByTittle, searchByCategory))
+        if (!searchByTittle && searchByCategory) setFilteredItems(filterBy('BY_CATEGORY', items, searchByTittle, searchByCategory))
+        if (!searchByTittle && !searchByCategory) setFilteredItems(filterBy(null, items, searchByTittle, searchByCategory))
       }, [items, searchByTittle, searchByCategory])
+
+
 
     // Product Detail Open/Close
     const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
@@ -83,6 +80,12 @@ const ShoppingCartProvider = ({ children }) => {
 
     // Shopping Cart Order
     const [order, setOrder] = useState([])
+
+   
+
+    
+
+    
     
 
     return (
@@ -108,9 +111,8 @@ const ShoppingCartProvider = ({ children }) => {
             searchByTittle,
             setSearchByTittle,
             filteredItems,
-            setFilteredItems,
             searchByCategory,
-            setSearchByCategory
+            setSearchByCategory,
             }}>
             {children}
         </ShoppingCartContext.Provider>

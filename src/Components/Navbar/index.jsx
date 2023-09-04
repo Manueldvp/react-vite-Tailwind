@@ -6,51 +6,53 @@ import { ShoppingCartIcon } from '@heroicons/react/24/solid'
 const Navbar = () => {
 
     const context = useContext(ShoppingCartContext)
-    const activeStyle = 'underline underline-offset-4'
+    const activeStyle = 'underline underline-offset-4 hover:text-black/70'
+    const activeHover = 'hover:text-black/70'
   return (
-    <nav className='flex justify-between items-center fixed z-10 w-full py-5 px-8 text-sm font-light top-0'>
+    <nav className='flex bg-[#fdfdfd] rounded-b-3xl hover:bg-slate-100 shadow-md justify-between items-center fixed z-10 w-full py-5 px-8 text-sm font-medium/2 top-0'>
         <ul className='flex items-center gap-2'>
-            <li className='font-semibold text-lg'>
+            <li className='font-semibold hover:text-black/70 text-lg'>
                 <NavLink to='/'>
                     Shoppy
                 </NavLink>
             </li>
             <li>
-                <NavLink to='/'
+                <NavLink to='/' onClick={() => context.setSearchByCategory()}
                 className= {({ isActive }) =>
-                isActive ? activeStyle : undefined
+                isActive ? activeStyle : activeHover
+                
                  }>
                     All
                 </NavLink>
             </li>
             <li>
-                <NavLink to='/Electronics' onClick={() => context.searchByCategory('Electronics')}
+                <NavLink to='/Electronics' onClick={() => context.setSearchByCategory('electronics')}
                 className= {({ isActive }) =>
-                isActive ? activeStyle : undefined
+                isActive ? activeStyle : activeHover
                  }>
                     Electronics
                 </NavLink>
             </li>
             <li>
-                <NavLink to='/Jewelery' onClick={() => context.searchByCategory('Jewelery')}
+                <NavLink to='/Jewelery' onClick={() => context.setSearchByCategory('jewelery')}
                 className= {({ isActive }) =>
-                isActive ? activeStyle : undefined
+                isActive ? activeStyle : activeHover
                  }>
                     Jewelery
                 </NavLink>
             </li>
             <li>
-                <NavLink to='/Mens-Clothing' onClick={() => context.searchByCategory("men's clothing")}
+                <NavLink to='/Mens-Clothing' onClick={() => context.setSearchByCategory("men's clothing")}
                 className= {({ isActive }) =>
-                isActive ? activeStyle : undefined
+                isActive ? activeStyle : activeHover
                  }>
                     Men's Clothing
                 </NavLink>
             </li>
             <li>
-                <NavLink to='/Womens-Clothing' onClick={() => context.searchByCategory("Women's clothing")}
+                <NavLink to='/Womens-Clothing' onClick={() => context.setSearchByCategory("women's clothing")}
                 className= {({ isActive }) =>
-                isActive ? activeStyle : undefined
+                isActive ? activeStyle : activeHover
                  }>
                     Women's Clothing
                 </NavLink>
@@ -58,7 +60,7 @@ const Navbar = () => {
             <li>
                 <NavLink to='/Others'
                 className= {({ isActive }) =>
-                isActive ? activeStyle : undefined
+                isActive ? activeStyle : activeHover
                  }>
                     Others
                 </NavLink>
@@ -71,7 +73,7 @@ const Navbar = () => {
             <li>
                 <NavLink to='/my-orders'
                 className= {({ isActive }) =>
-                isActive ? activeStyle : undefined
+                isActive ? activeStyle : activeHover
                  }>
                     My Orders
                 </NavLink>
@@ -79,13 +81,13 @@ const Navbar = () => {
             <li>
                 <NavLink to='/my-account'
                 className= {({ isActive }) =>
-                isActive ? activeStyle : undefined
+                isActive ? activeStyle : activeHover
                  }>
                     My Account
                 </NavLink>
             </li>
             <li className='flex gap-1'>
-                <ShoppingCartIcon  className="h-5 w-5 text-black/60"/> {context.cartProducts.length}
+                <ShoppingCartIcon onClick={() => context.openCheckoutSide()} className="h-5 cursor-pointer w-5 text-[#395B64]/60"/> {context.cartProducts.length}
             </li>
         </ul>
     </nav>

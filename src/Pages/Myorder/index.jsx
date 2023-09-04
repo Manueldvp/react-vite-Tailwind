@@ -16,11 +16,11 @@ function Myorder() {
 
   return (
     <Layout>
-      <div className='flex w-100  gap-5 mb-5'>
+      <div className='flex w-100 mt-3 gap-5 mb-5'>
         <Link to='/my-orders'>
          <ArrowDownOnSquareStackIcon className='w-6 h-6'/>
         </Link>
-        <h1>My Order</h1>
+        <h1 className='font-semibold'>My Order</h1>
       </div>
       
       <div className='flex flex-col flex-1'>

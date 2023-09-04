@@ -12,7 +12,7 @@ function Myorders() {
   return (
     <Layout>
       <div className='flex w-50 items-center justify-center'>
-        <h1>My Orders</h1>
+        <h1 className='font-semibold'>My Orders</h1>
       </div>
       
       {
@@ -21,7 +21,7 @@ function Myorders() {
           
           <Link key={index} to={`/my-orders/${index}`}>
             <OrderCards
-          
+              date={card.date}
               totalPrice={card.totalPrice} 
               totalProducts={card.totalProducts}/>
           </Link>

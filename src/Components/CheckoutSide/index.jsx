@@ -36,28 +36,32 @@ const CheckoutSideMenu = () => {
 
   const handleCheckout = () => {
 
+    let today = new Date().toLocaleDateString()
+
     const orderToAdd = {
-      date: '01.02.23',
+      date: today,
       products: context.cartProducts,
       totalProducts: qty(context.cartProducts),
       totalPrice: totalPrice(context.cartProducts),
     }
     context.setOrder([...context.order,  orderToAdd])
     context.setCartProducts([])
-  
+    context.setSearchByTittle(null)
+    context.setIsCheckoutSideOpen(false)
+
   }
  
 
   return (
     <aside 
-    className={`${context.isCheckoutSideOpen ? 'flex' : 'hidden'} checkout-side flex-col fixed top-20  bg-white right-5 border border-black rounded-lg `}>
-        <div className='flex  p-5 justify-between items-center '>
+    className={`${context.isCheckoutSideOpen ? 'flex' : 'hidden'} checkout-side flex-col fixed top-20  bg-white right-5 shadow-3xl overflow-none rounded-lg `}>
+        <div className='flex p-5 justify-between items-center '>
             <h2 className='font-medium text-xl'>
                 My Order
             </h2>
-            <XCircleIcon className='flex w-8 h-8 cursor-pointer' onClick={() => context.closeCheckoutSide()}/>
+            <XCircleIcon className='flex w-8 h-8 cursor-pointer hover:text-black/50' onClick={() => context.closeCheckoutSide()}/>
         </div>
-        <div className='flex flex-col flex-1 overflow-y-scroll'>
+        <div className='flex flex-col flex-1 p-4 '>
           {
             context.cartProducts.map(product => {
               return (
@@ -76,12 +80,12 @@ const CheckoutSideMenu = () => {
           }
         </div>
         <div className='px-2'>
-          <p>
-            <span>Total</span>
-            <span>${totalPrice(context.cartProducts)}</span>
+          <p className='flex justify-around mb-3'>
+            <span className='font-semibold'>Total</span>
+            <span className='font-bold'>${totalPrice(context.cartProducts)}</span>
           </p>
           <Link to='my-orders/last'>
-              <button onClick={() => handleCheckout()} className='w-full h-10 mb-5 bg-slate-400 rounded-lg'>Checkout</button>
+              <button onClick={() => handleCheckout()} className='w-full h-10 font-semibold hover:bg-slate-400/80 mb-5 bg-slate-400 rounded-lg'>Checkout</button>
           </Link>
         </div>
     </aside>
