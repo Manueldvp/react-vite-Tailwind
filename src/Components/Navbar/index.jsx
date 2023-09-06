@@ -8,6 +8,58 @@ const Navbar = () => {
     const context = useContext(ShoppingCartContext)
     const activeStyle = 'underline underline-offset-4 hover:text-black/70'
     const activeHover = 'hover:text-black/70'
+
+    //Sign Out
+    const signOut = localStorage.getItem('sign-out')
+    const parsedSignOut = JSON.parse(signOut)
+    const isUserSignOut = context.signOut || parsedSignOut
+
+    const handleSignOut = () => {
+        const stringifiedSignOut = JSON.stringify(true)
+        localStorage.setItem('sign-out', stringifiedSignOut)
+        context.setSignOut(true)
+    }
+
+    const renderView = () => {
+        if (isUserSignOut) {
+            return (
+            <li>
+                <NavLink to='/sing-in'
+                className= {({ isActive }) =>
+                isActive ? activeStyle : activeHover
+                 }
+                 onClick={() => handleSignOut()}>
+                    Sign out
+                </NavLink>
+            </li>
+            )
+        }else {
+            return (
+                <>
+                    <li className='text-black/60'>
+                        default@gmail.com
+                    </li>
+                    <li>
+                        <NavLink to='/my-orders'
+                        className= {({ isActive }) =>
+                        isActive ? activeStyle : activeHover
+                        }>
+                            My Orders
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/my-account'
+                        className= {({ isActive }) =>
+                        isActive ? activeStyle : activeHover
+                        }>
+                            My Account
+                        </NavLink>
+                    </li>
+                </>
+            )
+        }
+    }
+    
   return (
     <nav className='flex bg-[#fdfdfd] rounded-b-3xl hover:bg-slate-100 shadow-md justify-between items-center fixed z-10 w-full py-5 px-8 text-sm font-medium/2 top-0'>
         <ul className='flex items-center gap-2'>
@@ -66,30 +118,12 @@ const Navbar = () => {
                 </NavLink>
             </li>
         </ul>
-        <ul className='flex items-center gap-2'>
-            <li className='text-black/60'>
-                default@gmail.com
-            </li>
-            <li>
-                <NavLink to='/my-orders'
-                className= {({ isActive }) =>
-                isActive ? activeStyle : activeHover
-                 }>
-                    My Orders
-                </NavLink>
-            </li>
-            <li>
-                <NavLink to='/my-account'
-                className= {({ isActive }) =>
-                isActive ? activeStyle : activeHover
-                 }>
-                    My Account
-                </NavLink>
-            </li>
+        <ul className='flex items-center gap-2'>  
+            {renderView()}
             <li className='flex gap-1'>
                 <ShoppingCartIcon onClick={() => context.openCheckoutSide()} className="h-5 cursor-pointer w-5 text-[#395B64]/60"/> {context.cartProducts.length}
-            </li>
-        </ul>
+            </li>  
+         </ul>          
     </nav>
   )
 }
