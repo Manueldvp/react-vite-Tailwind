@@ -19,21 +19,17 @@ const Navbar = () => {
         localStorage.setItem('sign-out', stringifiedSignOut)
         context.setSignOut(true)
     }
+    // Account
+    const account = localStorage.getItem('account')
+    const parseAccount = JSON.parse(account)
+
+    //Has an account
+    const noAccountInLocalStorage = parseAccount ? Object.keys(parseAccount).length === 0 : true
+    const noAccountInLocalState = context.account ? Object.keys(context.account).length === 0 : true
+    const hasUserAnAccount = !noAccountInLocalState || !noAccountInLocalStorage
 
     const renderView = () => {
-        if (isUserSignOut) {
-            return (
-            <li>
-                <NavLink to='/sing-in'
-                className= {({ isActive }) =>
-                isActive ? activeStyle : activeHover
-                 }
-                 onClick={() => handleSignOut()}>
-                    Sign out
-                </NavLink>
-            </li>
-            )
-        }else {
+        if (hasUserAnAccount && !isUserSignOut) {
             return (
                 <>
                     <li className='text-black/60'>
@@ -55,7 +51,29 @@ const Navbar = () => {
                             My Account
                         </NavLink>
                     </li>
-                </>
+                
+                    <li>
+                        <NavLink to='/sign-in'
+                        className= {({ isActive }) =>
+                        isActive ? activeStyle : activeHover
+                        }
+                        onClick={() => handleSignOut()}>
+                            Sign out
+                        </NavLink>
+                    </li>
+            </>
+            )
+        }else {
+            return (
+                <li>
+                    <NavLink to='/sign-in'
+                        className= {({ isActive }) =>
+                        isActive ? activeStyle : activeHover
+                        }
+                        onClick={() => handleSignOut()}>
+                            Sign in
+                    </NavLink>
+                </li>
             )
         }
     }
@@ -64,7 +82,7 @@ const Navbar = () => {
     <nav className='flex bg-[#fdfdfd] rounded-b-3xl hover:bg-slate-100 shadow-md justify-between items-center fixed z-10 w-full py-5 px-8 text-sm font-medium/2 top-0'>
         <ul className='flex items-center gap-2'>
             <li className='font-semibold hover:text-black/70 text-lg'>
-                <NavLink to='/'>
+                <NavLink to={`${isUserSignOut ? '/sign-in' : '/'} `}>
                     Shoppy
                 </NavLink>
             </li>

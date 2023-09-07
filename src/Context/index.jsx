@@ -1,6 +1,5 @@
 import { createContext, useState } from "react";
 import apiUrl from '../Api'
-import { apiUrlCategory } from "../Api";
 import { useEffect } from "react";
 
 export const ShoppingCartContext = createContext();
