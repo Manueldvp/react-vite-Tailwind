@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ShoppingCartContext } from '../../Context'
-import { ShoppingCartIcon } from '@heroicons/react/24/solid'
+import ShoppingCart from '../ShoppingCar'
 
 const Navbar = () => {
 
@@ -13,11 +13,16 @@ const Navbar = () => {
     const signOut = localStorage.getItem('sign-out')
     const parsedSignOut = JSON.parse(signOut)
     const isUserSignOut = context.signOut || parsedSignOut
+    const removeLocalStorage = () => {
+        localStorage.removeItem("account")
+        context.setSignOut(true)
+      }
 
     const handleSignOut = () => {
         const stringifiedSignOut = JSON.stringify(true)
         localStorage.setItem('sign-out', stringifiedSignOut)
         context.setSignOut(true)
+        removeLocalStorage()
     }
     // Account
     const account = localStorage.getItem('account')
@@ -33,7 +38,7 @@ const Navbar = () => {
             return (
                 <>
                     <li className='text-black/60'>
-                        default@gmail.com
+                        {parseAccount?.email}
                     </li>
                     <li>
                         <NavLink to='/my-orders'
@@ -139,7 +144,7 @@ const Navbar = () => {
         <ul className='flex items-center gap-2'>  
             {renderView()}
             <li className='flex gap-1'>
-                <ShoppingCartIcon onClick={() => context.openCheckoutSide()} className="h-5 cursor-pointer w-5 text-[#395B64]/60"/> {context.cartProducts.length}
+                <ShoppingCart/>
             </li>  
          </ul>          
     </nav>

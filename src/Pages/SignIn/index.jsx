@@ -23,7 +23,7 @@ function SignIn() {
     localStorage.setItem('sign-out', stringifiedSignOut)
     context.setSignOut(false)
 
-    return <Navigate replace to={'/'} />
+    return <Navigate replace to={"/"}/>
   }
 
   const createAnAccount = () => {
@@ -42,6 +42,7 @@ function SignIn() {
     handleSignIn()
   }
 
+ 
  
 
   const renderLogIn = () => {
@@ -66,7 +67,7 @@ function SignIn() {
           <a className='font-light text-xs underline underline-offset-4' href="/">Forgot my Password</a>
         </div>
         <button className='rounded-lg h-10 shadow-#29 hover:bg-slate-100 disabled:bg-black/60'
-        disabled={hasUserAnAccount} onClick={() => setView('create-user-info')}>
+        disabled={hasUserAnAccount} onClick={() => setView('create-user-info')} >
           Sign up
         </button>
       </div>
@@ -88,7 +89,7 @@ function SignIn() {
           <label htmlFor="password" className='font-semibold mb-2'>Your Password:</label>
           <input type="text" id='password' name='password' defaultValue={parsedAccount?.password} placeholder='*******' className='rounded-lg shadow-#29 p-2'/>
         </div>
-        <Link>
+        <Link to='/'>
           <button className='bg-black/90 text-white w-full rounded-lg mt-10 py-3' 
           onClick={() => createAnAccount()}>
             Create
