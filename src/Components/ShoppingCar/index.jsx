@@ -11,7 +11,7 @@ const ShoppingCart = () => {
     }
 
     return (
-       <div className="relative flex gap-0.5 items-center" onClick={() => context.openCheckoutSideMenu()}>
+       <div className="relative flex gap-0.5 items-center" onClick={() => openCheckoutSideMenu()}>
         <ShoppingCartIcon  className="h-6 fill-none cursor-pointer w-6 text-[#395B64]/60"/> 
         <div className="absolute bottom-3 cursor-pointer left-4 flex justify-center items-center rounded-full bg-black w-4 h-4 text-xs text-white">
             {context.cartProducts.length}
